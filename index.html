@@ -533,7 +533,7 @@
     <div class="hero-label">Company Intelligence System</div>
     <h1 class="hero-title">Know which companies<br>are <em>in motion</em></h1>
     <p class="hero-desc">
-      A multi-agent intelligence system that monitors AI and tech companies for meaningful signals — funding events, hiring spikes, leadership changes, sentiment shifts — and delivers structured analysis through Telegram. Built to inform both career and investment decisions by surfacing what matters before it becomes obvious.
+      A multi-agent intelligence system that monitors AI and tech companies for meaningful signals: funding events, hiring spikes, leadership changes, and sentiment shifts. Built to inform both career and investment decisions by surfacing what matters before it becomes obvious. Delivered through Telegram.
     </p>
     <div class="hero-commands">
       <div class="cmd">/signal [company]</div>
@@ -550,7 +550,7 @@
   <section class="section reveal">
     <div class="section-label">Overview</div>
     <h2 class="section-title">Two ways to use it</h2>
-    <p class="section-desc">Query any company on demand, or add companies to a persistent watchlist that autonomously alerts you when a signal threshold is crossed — not on a timer, but when something meaningful is actually detected.</p>
+    <p class="section-desc">Query any company on demand, or add companies to a persistent watchlist that autonomously alerts you when a signal threshold is crossed. Not on a timer, but when something meaningful is actually detected.</p>
     <div class="how-grid">
       <div class="how-step">
         <div class="how-step-num">01 — ON DEMAND</div>
@@ -560,7 +560,7 @@
       <div class="how-step">
         <div class="how-step-num">02 — PASSIVE</div>
         <div class="how-step-title">Watchlist Monitor</div>
-        <div class="how-step-body">Add companies with <code>/watch</code> and a lightweight background scout checks each one every 6 hours. When a company's signal score hits 7 or above, the full pipeline fires automatically and an alert is sent — no manual query needed.</div>
+        <div class="how-step-body">Add companies with <code>/watch</code> and a lightweight background scout checks each one every 6 hours. When a company's signal score hits 7 or above, the full pipeline fires automatically and an alert is sent without any manual query needed.</div>
       </div>
       <div class="how-step">
         <div class="how-step-num">03 — INTERFACE</div>
@@ -581,7 +581,7 @@
   <section class="section reveal">
     <div class="section-label">Architecture</div>
     <h2 class="section-title">How the pipeline works</h2>
-    <p class="section-desc">A scout agent runs first on every query. Its findings determine what happens next — either conditional routing to pre-built agents for known signal patterns, or dynamic agent spawning for novel situations. Hover each node to learn more.</p>
+    <p class="section-desc">A scout agent runs first on every query. Its findings determine what happens next: either conditional routing to pre-built agents for known signal patterns, or dynamic agent spawning for novel situations. Hover each node to learn more.</p>
 
     <div class="arch-diagram">
       <div class="arch-grid">
@@ -595,7 +595,7 @@
           </div>
         </div>
 
-        <div class="arch-connector">└── routes to ──</div>
+        <div class="arch-connector">└── routes to</div>
 
         <div class="arch-node">
           <div class="arch-node-icon">🧭</div>
@@ -606,26 +606,26 @@
           </div>
         </div>
 
-        <div class="arch-connector">└── always runs first ──</div>
+        <div class="arch-connector">└── always runs first</div>
 
         <div class="arch-node">
           <div class="arch-node-icon">🔍</div>
           <div class="arch-node-content">
             <div class="arch-node-title">SCOUT AGENT</div>
             <div class="arch-node-subtitle">Claude Sonnet · Full data gather · Signal profiling</div>
-            <div class="arch-node-desc">Queries NewsAPI, Serper, Yahoo Finance, and SEC EDGAR to build a structured signal profile: funding events, leadership changes, hiring spikes, sentiment shifts, and a novelty score 0–10. The novelty score is what determines the routing decision — if signals are contradictory, cross-domain, or structurally unusual, the score is high.</div>
+            <div class="arch-node-desc">Queries NewsAPI, Serper, Yahoo Finance, and SEC EDGAR to build a structured signal profile: funding events, leadership changes, hiring spikes, sentiment shifts, and a novelty score from 0 to 10. The novelty score determines the routing decision. If signals are contradictory, cross-domain, or structurally unusual, the score is high.</div>
           </div>
         </div>
 
-        <div class="arch-connector">└── novelty score determines path ──</div>
+        <div class="arch-connector">└── novelty score determines path</div>
 
         <div class="arch-split">
           <div class="arch-branch">
             <div class="arch-branch-label">NOVELTY SCORE &lt; 7 · Conditional Routing</div>
-            <div class="arch-mini-node"><span>💰</span> Funding Agent — round size, investor quality, competitive signal</div>
-            <div class="arch-mini-node"><span>📈</span> Organic Growth Agent — hiring spike without funding (the meaningful signal)</div>
-            <div class="arch-mini-node"><span>👔</span> Market Impact Agent — leadership change at a public company</div>
-            <div class="arch-mini-node"><span>🗣️</span> Reputation Agent — sentiment source, severity, recovery pattern</div>
+            <div class="arch-mini-node"><span>💰</span> Funding Agent: round size, investor quality, competitive signal</div>
+            <div class="arch-mini-node"><span>📈</span> Organic Growth Agent: hiring spike without funding (the meaningful signal)</div>
+            <div class="arch-mini-node"><span>👔</span> Market Impact Agent: leadership change at a public company</div>
+            <div class="arch-mini-node"><span>🗣️</span> Reputation Agent: sentiment source, severity, recovery pattern</div>
           </div>
           <div class="arch-branch">
             <div class="arch-branch-label highlight">NOVELTY SCORE ≥ 7 · Dynamic Agent Spawning</div>
@@ -636,7 +636,7 @@
           </div>
         </div>
 
-        <div class="arch-connector">└── all outputs flow to ──</div>
+        <div class="arch-connector">└── all outputs flow to</div>
 
         <div class="arch-node">
           <div class="arch-node-icon">📋</div>
@@ -663,7 +663,7 @@
       <div class="decision-card">
         <div class="decision-icon">🔀</div>
         <div class="decision-title">Conditional Routing for Known Patterns</div>
-        <div class="decision-body">For predictable signal categories — funding events, hiring spikes, leadership changes, sentiment shifts — the orchestrator routes to pre-built specialized agents. These categories are stable enough that a well-configured agent handles them consistently across any company.</div>
+        <div class="decision-body">For predictable signal categories like funding events, hiring spikes, leadership changes, and sentiment shifts, the orchestrator routes to pre-built specialized agents. These categories are stable enough that a well-configured agent handles them consistently across any company.</div>
         <div class="decision-tradeoff">
           <strong>Tradeoff Considered</strong>
           Spawning for everything would be simpler to implement uniformly. Pre-built agents win on speed, cost, and consistency for known patterns. Spawning is reserved for where it actually adds value.
@@ -673,27 +673,27 @@
       <div class="decision-card">
         <div class="decision-icon">⚡</div>
         <div class="decision-title">Dynamic Agent Spawning for Edge Cases</div>
-        <div class="decision-body">When the scout returns a novelty score of 7 or above — contradictory signals, cross-domain events, structurally unusual situations — a supervisor agent reads the raw findings and writes a purpose-built agent at runtime. That agent doesn't exist until that moment. Inflection AI is the canonical example: a simultaneous acqui-hire and continuing entity doesn't fit any pre-built routing pattern.</div>
+        <div class="decision-body">When the scout returns a novelty score of 7 or above due to contradictory signals, cross-domain events, or structurally unusual situations, a supervisor agent reads the raw findings and writes a purpose-built agent at runtime. That agent does not exist until that moment. Inflection AI is the example: a simultaneous acqui-hire and continuing entity does not fit any pre-built routing pattern.</div>
         <div class="decision-tradeoff">
           <strong>Tradeoff Considered</strong>
-          Spawning is slower and more expensive than routing. It's only triggered when the signal is novel enough that a generic agent would miss the nuance or produce conflicting outputs.
+          Spawning is slower and more expensive than routing. It only triggers when the signal is novel enough that a generic agent would miss the nuance or produce conflicting outputs.
         </div>
       </div>
 
       <div class="decision-card">
         <div class="decision-icon">🏗️</div>
         <div class="decision-title">Scout-First Architecture</div>
-        <div class="decision-body">The scout runs before any routing decision is made. This means the system can't know what it needs until it looks — which is the correct model for intelligence work. The scout's novelty score is load-bearing: it's what makes the routing decision non-trivial and what justifies the orchestrator existing at all.</div>
+        <div class="decision-body">The scout runs before any routing decision is made. This means the system cannot know what it needs until it looks, which is the correct model for intelligence work. The scout's novelty score is load-bearing: it is what makes the routing decision non-trivial and what justifies the orchestrator existing at all.</div>
         <div class="decision-tradeoff">
           <strong>Tradeoff Considered</strong>
-          Running the scout first adds latency to every query. The alternative — routing based on the company name alone — would miss the actual signal and make the orchestrator just a switch statement.
+          Running the scout first adds latency to every query. Routing based on the company name alone would miss the actual signal and reduce the orchestrator to a simple switch statement.
         </div>
       </div>
 
       <div class="decision-card">
         <div class="decision-icon">🧠</div>
         <div class="decision-title">Two Models, Two Jobs</div>
-        <div class="decision-body">Claude Haiku handles the orchestrator, watchlist lightweight scout, and routing decisions — tasks where speed and cost matter more than depth. Claude Sonnet handles the full scout, all analysis agents, dynamic spawning, and synthesis — where output quality determines the value of the entire pipeline.</div>
+        <div class="decision-body">Claude Haiku handles the orchestrator, watchlist lightweight scout, and routing decisions where speed and cost matter more than depth. Claude Sonnet handles the full scout, all analysis agents, dynamic spawning, and synthesis where output quality determines the value of the entire pipeline.</div>
         <div class="decision-tradeoff">
           <strong>Tradeoff Considered</strong>
           Using Sonnet everywhere would produce marginally better routing decisions at 3x the cost. Haiku classification is accurate enough for binary routing logic and keeps the always-on watchlist monitor cheap to run.
@@ -703,7 +703,7 @@
       <div class="decision-card">
         <div class="decision-icon">📡</div>
         <div class="decision-title">Signal-Driven Watchlist Monitor</div>
-        <div class="decision-body">The watchlist runs a cheap Haiku-powered lightweight scout every 6 hours. It only returns a score — no analysis. If the score is below 7, nothing happens. If it hits 7 or above, the full Sonnet pipeline fires. This means expensive analysis only runs when something meaningful is actually detected.</div>
+        <div class="decision-body">The watchlist runs a cheap Haiku-powered lightweight scout every 6 hours. It only returns a score with no analysis. If the score is below 7, nothing happens. If it hits 7 or above, the full Sonnet pipeline fires. This means expensive analysis only runs when something meaningful is actually detected.</div>
         <div class="decision-tradeoff">
           <strong>Tradeoff Considered</strong>
           A time-driven monitor (run full analysis every 6 hours regardless) would cost ~10x more and flood the user with low-signal output. Signal-driven monitoring is both more useful and more efficient.
@@ -723,6 +723,35 @@
     </div>
   </section>
 
+  <!-- ── TRY IT ── -->
+  <section class="section reveal">
+    <div class="section-label">Try It</div>
+    <h2 class="section-title">Use the bot yourself</h2>
+    <p class="section-desc">The bot is live on Telegram. Search for <strong>@companyintel_bot</strong> or click the link below to open it directly. No setup needed beyond having Telegram installed.</p>
+
+    <a href="https://t.me/companyintel_bot" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:white;font-family:'DM Mono',monospace;font-size:13px;font-weight:500;padding:14px 24px;border-radius:8px;text-decoration:none;margin-bottom:48px;transition:background 0.2s ease;" onmouseover="this.style.background='#1a8bc4'" onmouseout="this.style.background='var(--accent)'">
+      <span style="font-size:18px;">✈️</span> Open @companyintel_bot
+    </a>
+
+    <div class="how-grid" style="margin-top:0;">
+      <div class="how-step">
+        <div class="how-step-num">QUERY A COMPANY</div>
+        <div class="how-step-title">/signal [company]</div>
+        <div class="how-step-body">Send any company name and the full pipeline runs. Results arrive in 30 to 90 seconds. Try a straightforward company like Anthropic or Nvidia for standard routing, or try Inflection AI to see dynamic agent spawning trigger.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">MONITOR A COMPANY</div>
+        <div class="how-step-title">/watch [company]</div>
+        <div class="how-step-body">Add any company to the watchlist. A lightweight scout checks it every 6 hours and fires the full pipeline automatically if the signal score hits 7 or above. Use /watchlist to see everything currently being monitored.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">ALL COMMANDS</div>
+        <div class="how-step-title">Full command list</div>
+        <div class="how-step-body">/signal [company], /watch [company], /unwatch [company], /watchlist, /watched, /trigger. The /trigger command manually runs the watchlist monitor across all watched companies immediately.</div>
+      </div>
+    </div>
+  </section>
+
   <!-- ── SCREENSHOTS ── -->
   <section class="section screenshots-section reveal">
     <div class="section-label">Live Demo</div>
@@ -734,7 +763,7 @@
       <div class="screenshot-header">
         <div class="screenshot-tag">/watchlist</div>
       </div>
-      <p class="screenshot-caption">Eight companies under active monitoring. Color-coded signal scores (green / yellow / red) updated each time the lightweight scout runs. MicroStrategy at 7/10 is at the alert threshold — the full pipeline will fire on the next check.</p>
+      <p class="screenshot-caption">Eight companies under active monitoring. Color-coded signal scores updated each time the lightweight scout runs. MicroStrategy at 7/10 is at the alert threshold and will trigger a full pipeline run on the next check.</p>
       <div class="screenshot-imgs single">
         <div class="screenshot-img">
           <img src="watchlist.png" alt="Watchlist command output" />
@@ -745,9 +774,9 @@
     <!-- Trigger -->
     <div class="screenshot-block reveal">
       <div class="screenshot-header">
-        <div class="screenshot-tag">/trigger — Autonomous Alert</div>
+        <div class="screenshot-tag">/trigger Autonomous Alert</div>
       </div>
-      <p class="screenshot-caption">The watchlist monitor fires autonomously for MicroStrategy at signal score 7/10. The full pipeline runs without any manual query — this is the core autonomous behavior of the system. The analysis correctly identifies MicroStrategy's capital structure as a programmatic Bitcoin accumulation flywheel rather than a standard funding event.</p>
+      <p class="screenshot-caption">The watchlist monitor fires autonomously for MicroStrategy at signal score 7/10. The full pipeline runs without any manual query. The analysis correctly identifies the capital structure as a programmatic Bitcoin accumulation flywheel rather than a standard funding event.</p>
       <div class="screenshot-imgs">
         <div class="screenshot-img">
           <img src="trigger-top.png" alt="Trigger alert top" />
@@ -761,15 +790,15 @@
     <!-- Inflection AI -->
     <div class="screenshot-block reveal">
       <div class="screenshot-header">
-        <div class="screenshot-tag">/signal Inflection AI — Dynamic Spawning</div>
+        <div class="screenshot-tag">/signal Inflection AI Dynamic Spawning</div>
       </div>
-      <p class="screenshot-caption">Inflection AI triggers dynamic agent spawning. The ⚡ Complex Situation Detected flag appears because the scout returned a high novelty score — Microsoft's acqui-hire of nearly the entire team while the corporate entity continued operating doesn't fit any standard routing pattern. The supervisor spawned a purpose-built agent configured with the exact structural situation found.</p>
+      <p class="screenshot-caption">Inflection AI triggers dynamic agent spawning. The Complex Situation Detected flag appears because the scout returned a high novelty score. Microsoft's acqui-hire of nearly the entire team while the corporate entity continued operating does not fit any standard routing pattern. The supervisor spawned a purpose-built agent configured with the exact structural situation found.</p>
       <div class="screenshot-imgs">
         <div class="screenshot-img">
-          <img src="signal-inflection-top.png" alt="Inflection AI signal top — complex situation detected" />
+          <img src="signal-inflection-top.png" alt="Inflection AI signal top complex situation detected" />
         </div>
         <div class="screenshot-img">
-          <img src="signal-inflection-bottom.png" alt="Inflection AI signal bottom — supervisor agent analysis" />
+          <img src="signal-inflection-bottom.png" alt="Inflection AI signal bottom supervisor agent analysis" />
         </div>
       </div>
     </div>
@@ -777,9 +806,9 @@
     <!-- Solana standard -->
     <div class="screenshot-block reveal">
       <div class="screenshot-header">
-        <div class="screenshot-tag">/signal Solana — Standard Routing</div>
+        <div class="screenshot-tag">/signal Solana Standard Routing</div>
       </div>
-      <p class="screenshot-caption">A standard conditional routing result. The scout returns a sentiment shift signal with no unusual novelty, so the orchestrator routes to the Reputation Agent. The output correctly identifies macro-driven price weakness disconnected from strong on-chain fundamentals — no dynamic spawning needed.</p>
+      <p class="screenshot-caption">A standard conditional routing result. The scout returns a sentiment shift signal with no unusual novelty, so the orchestrator routes to the Reputation Agent. The output correctly identifies macro-driven price weakness disconnected from strong on-chain fundamentals.</p>
       <div class="screenshot-imgs">
         <div class="screenshot-img">
           <img src="signal-solana-top.png" alt="Solana signal top" />
