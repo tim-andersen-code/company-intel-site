@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Company Intelligence Bot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f5f3ef;
+      --surface: #ffffff;
+      --border: #e2ddd6;
+      --text: #1a1815;
+      --text-muted: #6b6560;
+      --accent: #2AABEE;
+      --accent-dark: #1a8bc4;
+      --telegram-bg: #17212B;
+      --telegram-bubble: #182533;
+      --telegram-bubble-out: #2B5278;
+      --red: #e53935;
+      --yellow: #f9a825;
+      --green: #43a047;
+      --tag-bg: #eef7fd;
+      --tag-text: #1a8bc4;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 48px 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .hero::after {
+      content: '';
+      position: fixed;
+      top: 0; right: 0;
+      width: 45vw; height: 100vh;
+      background: radial-gradient(ellipse at 80% 40%, rgba(42,171,238,0.07) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.1s;
+    }
+
+    .hero-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(44px, 7vw, 88px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.2s;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-desc {
+      max-width: 560px;
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.35s;
+    }
+
+    .hero-commands {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.5s;
+    }
+
+    .cmd {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--tag-text);
+      background: var(--tag-bg);
+      border: 1px solid rgba(42,171,238,0.2);
+      padding: 6px 14px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .cmd:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 48px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.8s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .scroll-hint::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── SECTION WRAPPER ── */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 48px;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
+    }
+
+    .section-desc {
+      max-width: 620px;
+      color: var(--text-muted);
+      font-size: 16px;
+      margin-bottom: 56px;
+      line-height: 1.8;
+    }
+
+    /* ── ARCHITECTURE ── */
+    .arch-diagram {
+      background: var(--telegram-bg);
+      border-radius: 16px;
+      padding: 48px;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      color: #aab8c5;
+      overflow-x: auto;
+      position: relative;
+    }
+
+    .arch-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .arch-node {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px 20px;
+      border-radius: 10px;
+      margin-bottom: 4px;
+      transition: background 0.2s ease;
+      cursor: default;
+      position: relative;
+    }
+
+    .arch-node:hover { background: rgba(42,171,238,0.08); }
+    .arch-node:hover .arch-node-desc { max-height: 80px; opacity: 1; }
+
+    .arch-node-icon {
+      font-size: 20px;
+      min-width: 28px;
+      text-align: center;
+      margin-top: 2px;
+    }
+
+    .arch-node-content { flex: 1; }
+
+    .arch-node-title {
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      margin-bottom: 2px;
+    }
+
+    .arch-node-subtitle {
+      color: var(--accent);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+
+    .arch-node-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: #7a8c99;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      margin-top: 6px;
+      line-height: 1.6;
+    }
+
+    .arch-connector {
+      display: flex;
+      align-items: center;
+      padding-left: 34px;
+      color: #3d5166;
+      font-size: 12px;
+      height: 20px;
+    }
+
+    .arch-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 4px 0;
+    }
+
+    .arch-branch {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .arch-branch-label {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #3d5166;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .arch-branch-label.highlight { color: var(--accent); }
+
+    .arch-mini-node {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      margin-bottom: 4px;
+      font-size: 12px;
+      color: #7a8c99;
+      transition: background 0.2s;
+      cursor: default;
+    }
+
+    .arch-mini-node:hover { background: rgba(42,171,238,0.08); color: #aab8c5; }
+    .arch-mini-node span { font-size: 14px; }
+
+    .arch-hint {
+      text-align: center;
+      font-size: 11px;
+      color: #3d5166;
+      margin-top: 24px;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── DESIGN DECISIONS ── */
+    .decisions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .decision-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .decision-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+    }
+
+    .decision-icon {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    .decision-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .decision-body {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .decision-tradeoff {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      background: var(--tag-bg);
+      border: 1px solid rgba(42,171,238,0.15);
+      padding: 8px 12px;
+      border-radius: 6px;
+      line-height: 1.6;
+    }
+
+    .decision-tradeoff strong {
+      color: var(--accent-dark);
+      display: block;
+      margin-bottom: 2px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: 10px;
+    }
+
+    /* ── SCREENSHOTS ── */
+    .screenshots-section { background: var(--telegram-bg); }
+
+    .screenshots-section .section-title { color: #ffffff; }
+    .screenshots-section .section-desc { color: #7a8c99; }
+    .screenshots-section .section-label { color: var(--accent); }
+
+    .screenshot-block {
+      margin-bottom: 64px;
+    }
+
+    .screenshot-block:last-child { margin-bottom: 0; }
+
+    .screenshot-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .screenshot-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent);
+      background: rgba(42,171,238,0.1);
+      border: 1px solid rgba(42,171,238,0.2);
+      padding: 4px 12px;
+      border-radius: 4px;
+      letter-spacing: 0.06em;
+    }
+
+    .screenshot-caption {
+      font-size: 14px;
+      color: #7a8c99;
+      line-height: 1.65;
+      max-width: 560px;
+      margin-bottom: 20px;
+    }
+
+    .screenshot-imgs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 16px;
+    }
+
+    .screenshot-imgs.single { grid-template-columns: minmax(0, 600px); }
+
+    .screenshot-img {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease;
+    }
+
+    .screenshot-img:hover { transform: scale(1.015); }
+
+    .screenshot-img img {
+      width: 100%;
+      display: block;
+    }
+
+    .screenshot-divider {
+      width: 1px;
+      background: rgba(255,255,255,0.06);
+      align-self: stretch;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .how-step {
+      padding: 32px 28px;
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+
+    .how-step:last-child { border-right: none; }
+
+    .how-step-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+
+    .how-step-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .how-step-body {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ── DATA SOURCES ── */
+    .sources-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .source-pill {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 100px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .source-pill span { font-size: 15px; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero, .section { padding: 60px 24px; }
+      .arch-split { grid-template-columns: 1fr; }
+      .how-grid { grid-template-columns: 1fr; }
+      .how-step { border-right: none; border-bottom: 1px solid var(--border); }
+      .how-step:last-child { border-bottom: none; }
+      .screenshot-imgs { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-label">Company Intelligence System</div>
+    <h1 class="hero-title">Know which companies<br>are <em>in motion</em></h1>
+    <p class="hero-desc">
+      A multi-agent intelligence system that monitors AI and tech companies for meaningful signals — funding events, hiring spikes, leadership changes, sentiment shifts — and delivers structured analysis through Telegram. Built to inform both career and investment decisions by surfacing what matters before it becomes obvious.
+    </p>
+    <div class="hero-commands">
+      <div class="cmd">/signal [company]</div>
+      <div class="cmd">/watch [company]</div>
+      <div class="cmd">/unwatch [company]</div>
+      <div class="cmd">/watchlist</div>
+      <div class="cmd">/watched</div>
+      <div class="cmd">/trigger</div>
+    </div>
+    <div class="scroll-hint">scroll to explore</div>
+  </section>
+
+  <!-- ── HOW IT WORKS ── -->
+  <section class="section reveal">
+    <div class="section-label">Overview</div>
+    <h2 class="section-title">Two ways to use it</h2>
+    <p class="section-desc">Query any company on demand, or add companies to a persistent watchlist that autonomously alerts you when a signal threshold is crossed — not on a timer, but when something meaningful is actually detected.</p>
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="how-step-num">01 — ON DEMAND</div>
+        <div class="how-step-title">Signal Query</div>
+        <div class="how-step-body">Send <code>/signal [company]</code> and the full intelligence pipeline runs immediately. The scout agent gathers data, the orchestrator routes to the right agents, and a structured brief is delivered in 30–90 seconds.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">02 — PASSIVE</div>
+        <div class="how-step-title">Watchlist Monitor</div>
+        <div class="how-step-body">Add companies with <code>/watch</code> and a lightweight background scout checks each one every 6 hours. When a company's signal score hits 7 or above, the full pipeline fires automatically and an alert is sent — no manual query needed.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">03 — INTERFACE</div>
+        <div class="how-step-title">Telegram Delivery</div>
+        <div class="how-step-body">Telegram was chosen deliberately. An intelligence tool's value is in being alerted when something matters, not in going somewhere to check. The command structure also maps naturally onto interacting with an agent rather than using a dashboard.</div>
+      </div>
+    </div>
+    <div class="sources-row">
+      <div class="source-pill"><span>📰</span> NewsAPI</div>
+      <div class="source-pill"><span>🔍</span> Serper (Google Search)</div>
+      <div class="source-pill"><span>📈</span> Yahoo Finance</div>
+      <div class="source-pill"><span>🏛️</span> SEC EDGAR</div>
+      <div class="source-pill"><span>⚡</span> Anthropic API</div>
+    </div>
+  </section>
+
+  <!-- ── ARCHITECTURE ── -->
+  <section class="section reveal">
+    <div class="section-label">Architecture</div>
+    <h2 class="section-title">How the pipeline works</h2>
+    <p class="section-desc">A scout agent runs first on every query. Its findings determine what happens next — either conditional routing to pre-built agents for known signal patterns, or dynamic agent spawning for novel situations. Hover each node to learn more.</p>
+
+    <div class="arch-diagram">
+      <div class="arch-grid">
+
+        <div class="arch-node">
+          <div class="arch-node-icon">💬</div>
+          <div class="arch-node-content">
+            <div class="arch-node-title">TELEGRAM INTERFACE</div>
+            <div class="arch-node-subtitle">User input · Command routing · Alert delivery</div>
+            <div class="arch-node-desc">The entry point for all queries. Accepts /signal, /watch, /unwatch, /watchlist, /watched, and /trigger commands. Also receives autonomous alerts from the watchlist monitor when signal thresholds are exceeded.</div>
+          </div>
+        </div>
+
+        <div class="arch-connector">└── routes to ──</div>
+
+        <div class="arch-node">
+          <div class="arch-node-icon">🧭</div>
+          <div class="arch-node-content">
+            <div class="arch-node-title">ORCHESTRATOR</div>
+            <div class="arch-node-subtitle">Claude Haiku · Routing logic · Pipeline coordination</div>
+            <div class="arch-node-desc">Determines workflow type and delegates to the scout. After the scout returns, decides whether to use conditional routing or trigger the supervisor for dynamic spawning. Haiku is used here because routing decisions require classification, not depth.</div>
+          </div>
+        </div>
+
+        <div class="arch-connector">└── always runs first ──</div>
+
+        <div class="arch-node">
+          <div class="arch-node-icon">🔍</div>
+          <div class="arch-node-content">
+            <div class="arch-node-title">SCOUT AGENT</div>
+            <div class="arch-node-subtitle">Claude Sonnet · Full data gather · Signal profiling</div>
+            <div class="arch-node-desc">Queries NewsAPI, Serper, Yahoo Finance, and SEC EDGAR to build a structured signal profile: funding events, leadership changes, hiring spikes, sentiment shifts, and a novelty score 0–10. The novelty score is what determines the routing decision — if signals are contradictory, cross-domain, or structurally unusual, the score is high.</div>
+          </div>
+        </div>
+
+        <div class="arch-connector">└── novelty score determines path ──</div>
+
+        <div class="arch-split">
+          <div class="arch-branch">
+            <div class="arch-branch-label">NOVELTY SCORE &lt; 7 · Conditional Routing</div>
+            <div class="arch-mini-node"><span>💰</span> Funding Agent — round size, investor quality, competitive signal</div>
+            <div class="arch-mini-node"><span>📈</span> Organic Growth Agent — hiring spike without funding (the meaningful signal)</div>
+            <div class="arch-mini-node"><span>👔</span> Market Impact Agent — leadership change at a public company</div>
+            <div class="arch-mini-node"><span>🗣️</span> Reputation Agent — sentiment source, severity, recovery pattern</div>
+          </div>
+          <div class="arch-branch">
+            <div class="arch-branch-label highlight">NOVELTY SCORE ≥ 7 · Dynamic Agent Spawning</div>
+            <div class="arch-mini-node"><span>⚡</span> Supervisor reads raw scout findings</div>
+            <div class="arch-mini-node"><span>✍️</span> Writes purpose-built agent instructions at runtime</div>
+            <div class="arch-mini-node"><span>🤖</span> Spawns agent configured for exact situation found</div>
+            <div class="arch-mini-node"><span>🔬</span> Agent didn't exist before this query</div>
+          </div>
+        </div>
+
+        <div class="arch-connector">└── all outputs flow to ──</div>
+
+        <div class="arch-node">
+          <div class="arch-node-icon">📋</div>
+          <div class="arch-node-content">
+            <div class="arch-node-title">SYNTHESIS AGENT</div>
+            <div class="arch-node-subtitle">Claude Sonnet · Structured brief · Recommended action</div>
+            <div class="arch-node-desc">Receives all agent outputs, produces a structured brief with labeled sections per agent, a recommended action (Monitor / Research Further / High Priority), and a market note if the company is publicly traded. If dynamic spawning was used, the output is flagged with ⚡ Complex Situation Detected.</div>
+          </div>
+        </div>
+
+      </div>
+      <div class="arch-hint">hover each node for details</div>
+    </div>
+  </section>
+
+  <!-- ── DESIGN DECISIONS ── -->
+  <section class="section reveal">
+    <div class="section-label">Design Decisions</div>
+    <h2 class="section-title">Why it's built this way</h2>
+    <p class="section-desc">Every architectural choice was made deliberately. Here's the reasoning behind each one.</p>
+
+    <div class="decisions-grid">
+
+      <div class="decision-card">
+        <div class="decision-icon">🔀</div>
+        <div class="decision-title">Conditional Routing for Known Patterns</div>
+        <div class="decision-body">For predictable signal categories — funding events, hiring spikes, leadership changes, sentiment shifts — the orchestrator routes to pre-built specialized agents. These categories are stable enough that a well-configured agent handles them consistently across any company.</div>
+        <div class="decision-tradeoff">
+          <strong>Tradeoff Considered</strong>
+          Spawning for everything would be simpler to implement uniformly. Pre-built agents win on speed, cost, and consistency for known patterns. Spawning is reserved for where it actually adds value.
+        </div>
+      </div>
+
+      <div class="decision-card">
+        <div class="decision-icon">⚡</div>
+        <div class="decision-title">Dynamic Agent Spawning for Edge Cases</div>
+        <div class="decision-body">When the scout returns a novelty score of 7 or above — contradictory signals, cross-domain events, structurally unusual situations — a supervisor agent reads the raw findings and writes a purpose-built agent at runtime. That agent doesn't exist until that moment. Inflection AI is the canonical example: a simultaneous acqui-hire and continuing entity doesn't fit any pre-built routing pattern.</div>
+        <div class="decision-tradeoff">
+          <strong>Tradeoff Considered</strong>
+          Spawning is slower and more expensive than routing. It's only triggered when the signal is novel enough that a generic agent would miss the nuance or produce conflicting outputs.
+        </div>
+      </div>
+
+      <div class="decision-card">
+        <div class="decision-icon">🏗️</div>
+        <div class="decision-title">Scout-First Architecture</div>
+        <div class="decision-body">The scout runs before any routing decision is made. This means the system can't know what it needs until it looks — which is the correct model for intelligence work. The scout's novelty score is load-bearing: it's what makes the routing decision non-trivial and what justifies the orchestrator existing at all.</div>
+        <div class="decision-tradeoff">
+          <strong>Tradeoff Considered</strong>
+          Running the scout first adds latency to every query. The alternative — routing based on the company name alone — would miss the actual signal and make the orchestrator just a switch statement.
+        </div>
+      </div>
+
+      <div class="decision-card">
+        <div class="decision-icon">🧠</div>
+        <div class="decision-title">Two Models, Two Jobs</div>
+        <div class="decision-body">Claude Haiku handles the orchestrator, watchlist lightweight scout, and routing decisions — tasks where speed and cost matter more than depth. Claude Sonnet handles the full scout, all analysis agents, dynamic spawning, and synthesis — where output quality determines the value of the entire pipeline.</div>
+        <div class="decision-tradeoff">
+          <strong>Tradeoff Considered</strong>
+          Using Sonnet everywhere would produce marginally better routing decisions at 3x the cost. Haiku classification is accurate enough for binary routing logic and keeps the always-on watchlist monitor cheap to run.
+        </div>
+      </div>
+
+      <div class="decision-card">
+        <div class="decision-icon">📡</div>
+        <div class="decision-title">Signal-Driven Watchlist Monitor</div>
+        <div class="decision-body">The watchlist runs a cheap Haiku-powered lightweight scout every 6 hours. It only returns a score — no analysis. If the score is below 7, nothing happens. If it hits 7 or above, the full Sonnet pipeline fires. This means expensive analysis only runs when something meaningful is actually detected.</div>
+        <div class="decision-tradeoff">
+          <strong>Tradeoff Considered</strong>
+          A time-driven monitor (run full analysis every 6 hours regardless) would cost ~10x more and flood the user with low-signal output. Signal-driven monitoring is both more useful and more efficient.
+        </div>
+      </div>
+
+      <div class="decision-card">
+        <div class="decision-icon">💬</div>
+        <div class="decision-title">Telegram as the Interface</div>
+        <div class="decision-body">An intelligence tool's value is in being alerted when something matters, not in going somewhere to check. Telegram is already on your phone, sends push notifications, and its command structure maps naturally onto interacting with an agent. Building a web frontend would have added days of work for no functional gain.</div>
+        <div class="decision-tradeoff">
+          <strong>Tradeoff Considered</strong>
+          A web dashboard would allow richer data visualization. For a personal intelligence tool where the primary value is timely alerting, Telegram delivers that at zero infrastructure cost.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── SCREENSHOTS ── -->
+  <section class="section screenshots-section reveal">
+    <div class="section-label">Live Demo</div>
+    <h2 class="section-title">The system in action</h2>
+    <p class="section-desc">Real outputs from the deployed bot. Each screenshot shows a different part of the system working.</p>
+
+    <!-- Watchlist -->
+    <div class="screenshot-block reveal">
+      <div class="screenshot-header">
+        <div class="screenshot-tag">/watchlist</div>
+      </div>
+      <p class="screenshot-caption">Eight companies under active monitoring. Color-coded signal scores (green / yellow / red) updated each time the lightweight scout runs. MicroStrategy at 7/10 is at the alert threshold — the full pipeline will fire on the next check.</p>
+      <div class="screenshot-imgs single">
+        <div class="screenshot-img">
+          <img src="watchlist.png" alt="Watchlist command output" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Trigger -->
+    <div class="screenshot-block reveal">
+      <div class="screenshot-header">
+        <div class="screenshot-tag">/trigger — Autonomous Alert</div>
+      </div>
+      <p class="screenshot-caption">The watchlist monitor fires autonomously for MicroStrategy at signal score 7/10. The full pipeline runs without any manual query — this is the core autonomous behavior of the system. The analysis correctly identifies MicroStrategy's capital structure as a programmatic Bitcoin accumulation flywheel rather than a standard funding event.</p>
+      <div class="screenshot-imgs">
+        <div class="screenshot-img">
+          <img src="trigger-top.png" alt="Trigger alert top" />
+        </div>
+        <div class="screenshot-img">
+          <img src="trigger-bottom.png" alt="Trigger alert bottom" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Inflection AI -->
+    <div class="screenshot-block reveal">
+      <div class="screenshot-header">
+        <div class="screenshot-tag">/signal Inflection AI — Dynamic Spawning</div>
+      </div>
+      <p class="screenshot-caption">Inflection AI triggers dynamic agent spawning. The ⚡ Complex Situation Detected flag appears because the scout returned a high novelty score — Microsoft's acqui-hire of nearly the entire team while the corporate entity continued operating doesn't fit any standard routing pattern. The supervisor spawned a purpose-built agent configured with the exact structural situation found.</p>
+      <div class="screenshot-imgs">
+        <div class="screenshot-img">
+          <img src="signal-inflection-top.png" alt="Inflection AI signal top — complex situation detected" />
+        </div>
+        <div class="screenshot-img">
+          <img src="signal-inflection-bottom.png" alt="Inflection AI signal bottom — supervisor agent analysis" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Solana standard -->
+    <div class="screenshot-block reveal">
+      <div class="screenshot-header">
+        <div class="screenshot-tag">/signal Solana — Standard Routing</div>
+      </div>
+      <p class="screenshot-caption">A standard conditional routing result. The scout returns a sentiment shift signal with no unusual novelty, so the orchestrator routes to the Reputation Agent. The output correctly identifies macro-driven price weakness disconnected from strong on-chain fundamentals — no dynamic spawning needed.</p>
+      <div class="screenshot-imgs">
+        <div class="screenshot-img">
+          <img src="signal-solana-top.png" alt="Solana signal top" />
+        </div>
+        <div class="screenshot-img">
+          <img src="signal-solana-bottom.png" alt="Solana signal bottom" />
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.08 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
