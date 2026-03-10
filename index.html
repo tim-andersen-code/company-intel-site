@@ -594,39 +594,6 @@
     </div>
   </section>
 
-  <!-- ── UNDER THE HOOD ── -->
-  <section class="section reveal">
-    <div class="section-label">Under the Hood</div>
-    <h2 class="section-title">How it thinks and where it runs</h2>
-    <p class="section-desc">Two concepts worth understanding before diving into the architecture.</p>
-    <div class="how-grid">
-      <div class="how-step">
-        <div class="how-step-num">THE SIGNAL SCORE</div>
-        <div class="how-step-title">How urgency is measured</div>
-        <div class="how-step-body">The scout scores every company from 0 to 10 across four dimensions: signal volume, recency, contradiction, and novelty. A low score means nothing has changed worth knowing about. A high score means something is happening that could affect a hiring decision, an investment thesis, or a competitive landscape before it becomes widely understood.</div>
-      </div>
-      <div class="how-step">
-        <div class="how-step-num">THE INTERFACE</div>
-        <div class="how-step-title">Why Telegram</div>
-        <div class="how-step-body">An intelligence tool's value is in being alerted when something matters, not in going somewhere to check. The command structure maps naturally onto interacting with an agent rather than a dashboard, and Telegram is already on your phone.</div>
-      </div>
-    </div>
-
-    <div style="margin-top:48px;">
-      <p style="font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;">Data Sources</p>
-      <p style="font-size:15px;color:var(--text-muted);max-width:620px;margin-bottom:28px;line-height:1.8;">The scout pulls from six sources on every query: real-time news, web search, market data, SEC filings, institutional-grade financial metrics, and options flow. Together they cover the full signal surface a company can emit.</p>
-      <div class="sources-row">
-        <div class="source-pill"><span>📰</span> NewsAPI — real-time news</div>
-        <div class="source-pill"><span>🔍</span> Serper — web search</div>
-        <div class="source-pill"><span>📈</span> Yahoo Finance — market data</div>
-        <div class="source-pill"><span>🏛️</span> SEC EDGAR — filings</div>
-        <div class="source-pill"><span>📊</span> Polygon.io — options flow & short interest</div>
-        <div class="source-pill"><span>💹</span> Alpha Vantage — financial metrics</div>
-        <div class="source-pill"><span>⚡</span> Anthropic API — intelligence layer</div>
-      </div>
-    </div>
-  </section>
-
   <!-- ── ARCHITECTURE ── -->
   <section class="section reveal">
     <div class="section-label">Architecture</div>
@@ -699,6 +666,94 @@
 
       </div>
       <div class="arch-hint">hover each node for details</div>
+    </div>
+  </section>
+
+  <!-- ── UNDER THE HOOD ── -->
+  <section class="section reveal">
+    <div class="section-label">Under the Hood</div>
+    <h2 class="section-title">How urgency is measured</h2>
+    <p class="section-desc">Every query returns a signal score from 0 to 10. That score is the load-bearing element of the entire system — it determines routing, triggers alerts, and decides whether a standard agent or a purpose-built one runs.</p>
+
+    <!-- Score scale diagram -->
+    <div style="background:var(--telegram-bg);border-radius:16px;padding:40px;margin-bottom:40px;overflow:hidden;position:relative;">
+      <div style="position:absolute;top:0;right:0;width:300px;height:300px;background:radial-gradient(ellipse at 100% 0%, rgba(42,171,238,0.08) 0%, transparent 70%);pointer-events:none;"></div>
+
+      <p style="font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:28px;">Signal Score Scale</p>
+
+      <!-- Bar -->
+      <div style="position:relative;height:10px;border-radius:99px;background:linear-gradient(to right, #2d3748 0%, #43a047 40%, #f9a825 60%, #e53935 100%);margin-bottom:12px;"></div>
+      <div style="display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:11px;color:#6b7a8d;margin-bottom:36px;">
+        <span>0</span><span>2</span><span>4</span><span>6</span><span>8</span><span>10</span>
+      </div>
+
+      <!-- Three zones -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
+        <div style="background:rgba(67,160,71,0.1);border:1px solid rgba(67,160,71,0.25);border-radius:10px;padding:20px;">
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#43a047;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">0 – 5 · Quiet</div>
+          <div style="font-size:13px;color:#8899aa;line-height:1.6;">Nothing meaningful detected. Normal operations. No alert fires.</div>
+        </div>
+        <div style="background:rgba(249,168,37,0.1);border:1px solid rgba(249,168,37,0.25);border-radius:10px;padding:20px;">
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#f9a825;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">6 – 7 · Active</div>
+          <div style="font-size:13px;color:#8899aa;line-height:1.6;">Meaningful signal detected. Full pipeline fires. Standard routing to pre-built agents.</div>
+        </div>
+        <div style="background:rgba(229,57,53,0.1);border:1px solid rgba(229,57,53,0.25);border-radius:10px;padding:20px;">
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#e53935;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">8 – 10 · Complex</div>
+          <div style="font-size:13px;color:#8899aa;line-height:1.6;">Contradictory or novel signals. Dynamic agent spawned at runtime for exact situation found.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Four dimensions -->
+    <p style="font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;">Four Scoring Dimensions</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:40px;">
+
+      <div style="display:flex;gap:16px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;">
+        <div style="font-size:22px;flex-shrink:0;">📊</div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--text);margin-bottom:6px;">Volume</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">How many distinct signal types were detected across funding, hiring, leadership, sentiment, and market data.</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:16px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;">
+        <div style="font-size:22px;flex-shrink:0;">⏱️</div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--text);margin-bottom:6px;">Recency</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">How recently the signals occurred. A leadership change from last week scores higher than one from six months ago.</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:16px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;">
+        <div style="font-size:22px;flex-shrink:0;">⚡</div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--text);margin-bottom:6px;">Contradiction</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">Whether signals conflict with each other. Strong revenue alongside accelerating executive departures is a high-contradiction signal.</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:16px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;">
+        <div style="font-size:22px;flex-shrink:0;">🔬</div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--text);margin-bottom:6px;">Novelty</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">How unusual the situation is relative to normal activity for a company of that type, size, and sector.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:48px;">
+      <p style="font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;">Data Sources</p>
+      <p style="font-size:15px;color:var(--text-muted);max-width:620px;margin-bottom:28px;line-height:1.8;">The scout pulls from six sources on every query: real-time news, web search, market data, SEC filings, institutional-grade financial metrics, and options flow. Together they cover the full signal surface a company can emit.</p>
+      <div class="sources-row">
+        <div class="source-pill"><span>📰</span> NewsAPI — real-time news</div>
+        <div class="source-pill"><span>🔍</span> Serper — web search</div>
+        <div class="source-pill"><span>📈</span> Yahoo Finance — market data</div>
+        <div class="source-pill"><span>🏛️</span> SEC EDGAR — filings</div>
+        <div class="source-pill"><span>📊</span> Polygon.io — options flow & short interest</div>
+        <div class="source-pill"><span>💹</span> Alpha Vantage — financial metrics</div>
+        <div class="source-pill"><span>⚡</span> Anthropic API — intelligence layer</div>
+      </div>
     </div>
   </section>
 
