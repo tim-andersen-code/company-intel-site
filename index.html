@@ -565,7 +565,7 @@
       <div class="how-step">
         <div class="how-step-num">MONITOR A COMPANY</div>
         <div class="how-step-title">/watch [company]</div>
-        <div class="how-step-body">Add any company to the watchlist. A lightweight scout checks it every 6 hours and fires the full pipeline automatically if the signal score hits 7 or above. Use /watchlist to see everything currently being monitored.</div>
+        <div class="how-step-body">Add any company to the watchlist. A lightweight scout checks it every 6 hours and fires the full pipeline automatically if the signal score hits 6 or above. Use /watchlist to see everything currently being monitored.</div>
       </div>
       <div class="how-step">
         <div class="how-step-num">ALL COMMANDS</div>
@@ -589,7 +589,7 @@
       <div class="how-step">
         <div class="how-step-num">02 — PASSIVE</div>
         <div class="how-step-title">Watchlist Monitor</div>
-        <div class="how-step-body">Add companies with <code>/watch</code> and a lightweight background scout checks each one every 6 hours. When a company's signal score hits 7 or above, the full pipeline fires automatically and an alert is sent without any manual query needed.</div>
+        <div class="how-step-body">Add companies with <code>/watch</code> and a lightweight background scout checks each one every 6 hours. When a company's signal score hits 6 or above, the full pipeline fires automatically and an alert is sent without any manual query needed.</div>
       </div>
       <div class="how-step">
         <div class="how-step-num">03 — INTERFACE</div>
@@ -702,7 +702,7 @@
       <div class="decision-card">
         <div class="decision-icon">⚡</div>
         <div class="decision-title">Dynamic Agent Spawning for Edge Cases</div>
-        <div class="decision-body">When the scout returns a novelty score of 7 or above due to contradictory signals, cross-domain events, or structurally unusual situations, a supervisor agent reads the raw findings and writes a purpose-built agent at runtime. That agent does not exist until that moment. Inflection AI is the example: a simultaneous acqui-hire and continuing entity does not fit any pre-built routing pattern.</div>
+        <div class="decision-body">When the scout returns a novelty score of 6 or above due to contradictory signals, cross-domain events, or structurally unusual situations, a supervisor agent reads the raw findings and writes a purpose-built agent at runtime. That agent does not exist until that moment. Inflection AI is the example: a simultaneous acqui-hire and continuing entity does not fit any pre-built routing pattern.</div>
         <div class="decision-tradeoff">
           <strong>Tradeoff Considered</strong>
           Spawning is slower and more expensive than routing. It only triggers when the signal is novel enough that a generic agent would miss the nuance or produce conflicting outputs.
@@ -732,7 +732,7 @@
       <div class="decision-card">
         <div class="decision-icon">📡</div>
         <div class="decision-title">Signal-Driven Watchlist Monitor</div>
-        <div class="decision-body">The watchlist runs a cheap Haiku-powered lightweight scout every 6 hours. It only returns a score with no analysis. If the score is below 7, nothing happens. If it hits 7 or above, the full Sonnet pipeline fires. This means expensive analysis only runs when something meaningful is actually detected.</div>
+        <div class="decision-body">The watchlist runs a cheap Haiku-powered lightweight scout every 6 hours. It only returns a score with no analysis. If the score is below 6, nothing happens. If it hits 6 or above, the full Sonnet pipeline fires. This means expensive analysis only runs when something meaningful is actually detected.</div>
         <div class="decision-tradeoff">
           <strong>Tradeoff Considered</strong>
           A time-driven monitor (run full analysis every 6 hours regardless) would cost ~10x more and flood the user with low-signal output. Signal-driven monitoring is both more useful and more efficient.
@@ -763,7 +763,7 @@
       <div class="screenshot-header">
         <div class="screenshot-tag">/watchlist</div>
       </div>
-      <p class="screenshot-caption">Eight companies under active monitoring. Color-coded signal scores updated each time the lightweight scout runs. MicroStrategy at 7/10 is at the alert threshold and will trigger a full pipeline run on the next check.</p>
+      <p class="screenshot-caption">Eight companies under active monitoring. Color-coded signal scores updated each time the lightweight scout runs. Any company scoring 6 or above triggers the full pipeline automatically.</p>
       <div class="screenshot-imgs single">
         <div class="screenshot-img">
           <img src="watchlist.png" alt="Watchlist command output" />
@@ -774,9 +774,9 @@
     <!-- Trigger -->
     <div class="screenshot-block reveal">
       <div class="screenshot-header">
-        <div class="screenshot-tag">/trigger Autonomous Alert</div>
+        <div class="screenshot-tag">/trigger — Novo Nordisk 6/10</div>
       </div>
-      <p class="screenshot-caption">The watchlist monitor fires autonomously for MicroStrategy at signal score 7/10. The full pipeline runs without any manual query. The analysis correctly identifies the capital structure as a programmatic Bitcoin accumulation flywheel rather than a standard funding event.</p>
+      <p class="screenshot-caption">The watchlist monitor fires for Novo Nordisk at signal score 6/10, triggering dynamic agent spawning. The scout detects a contradictory signal environment: a sweeping governance reset driven directly by the Novo Nordisk Foundation alongside a cluster of positive catalysts including a Morgan Stanley upgrade, EU approval of a higher-efficacy Wegovy dose, and a settled legal dispute. The ANALYST TAKE flags the timing as deserving forensic scrutiny rather than straightforward celebration and correctly identifies the priority research question as whether the governance reset was triggered by contained strategic disagreement or undisclosed operational risk.</p>
       <div class="screenshot-imgs">
         <div class="screenshot-img">
           <img src="trigger-top.png" alt="Trigger alert top" />
