@@ -227,27 +227,27 @@
     .arch-node-title {
       color: #ffffff;
       font-weight: 500;
-      font-size: 13px;
+      font-size: 14px;
       letter-spacing: 0.05em;
-      margin-bottom: 2px;
+      margin-bottom: 4px;
     }
 
     .arch-node-subtitle {
       color: var(--accent);
-      font-size: 11px;
+      font-size: 12px;
       letter-spacing: 0.08em;
     }
 
     .arch-node-desc {
       font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
-      color: #7a8c99;
+      font-size: 14px;
+      color: #aab8c5;
       max-height: 0;
       opacity: 0;
       overflow: hidden;
       transition: all 0.3s ease;
-      margin-top: 6px;
-      line-height: 1.6;
+      margin-top: 8px;
+      line-height: 1.7;
     }
 
     .arch-connector {
@@ -274,13 +274,14 @@
     }
 
     .arch-branch-label {
-      font-size: 10px;
-      letter-spacing: 0.14em;
+      font-size: 11px;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: #3d5166;
+      color: var(--accent);
       margin-bottom: 12px;
       padding-bottom: 8px;
       border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-weight: 500;
     }
 
     .arch-branch-label.highlight { color: var(--accent); }
@@ -292,14 +293,15 @@
       padding: 8px 10px;
       border-radius: 6px;
       margin-bottom: 4px;
-      font-size: 12px;
-      color: #7a8c99;
+      font-size: 13px;
+      color: #aab8c5;
       transition: background 0.2s;
       cursor: default;
+      line-height: 1.5;
     }
 
-    .arch-mini-node:hover { background: rgba(42,171,238,0.08); color: #aab8c5; }
-    .arch-mini-node span { font-size: 14px; }
+    .arch-mini-node:hover { background: rgba(42,171,238,0.08); color: #d0dde8; }
+    .arch-mini-node span { font-size: 14px; flex-shrink: 0; }
 
     .arch-hint {
       text-align: center;
@@ -336,39 +338,97 @@
 
     .decision-title {
       font-family: 'DM Serif Display', serif;
-      font-size: 20px;
-      margin-bottom: 10px;
+      font-size: 21px;
+      margin-bottom: 12px;
       letter-spacing: -0.01em;
+      color: var(--text);
     }
 
     .decision-body {
-      font-size: 14px;
+      font-size: 15px;
       color: var(--text-muted);
-      line-height: 1.75;
+      line-height: 1.8;
       margin-bottom: 16px;
     }
 
+    .decision-body strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
     .decision-tradeoff {
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      color: var(--accent);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--text-muted);
       background: var(--tag-bg);
       border: 1px solid rgba(42,171,238,0.15);
-      padding: 8px 12px;
+      padding: 12px 16px;
       border-radius: 6px;
-      line-height: 1.6;
+      line-height: 1.75;
     }
 
     .decision-tradeoff strong {
+      font-family: 'DM Mono', monospace;
       color: var(--accent-dark);
       display: block;
-      margin-bottom: 2px;
+      margin-bottom: 6px;
       letter-spacing: 0.06em;
       text-transform: uppercase;
       font-size: 10px;
     }
 
-    /* ── SCREENSHOTS ── */
+    /* ── HOW IT WORKS ── */
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .how-step {
+      padding: 32px 28px;
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+
+    .how-step:last-child { border-right: none; }
+
+    .how-step-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+
+    .how-step-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .how-step-body {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .how-step-body strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .how-step-body code {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      color: var(--accent);
+      background: var(--tag-bg);
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
     .screenshots-section { background: var(--telegram-bg); }
 
     .screenshots-section .section-title { color: #ffffff; }
@@ -554,12 +614,12 @@
       <div class="how-step">
         <div class="how-step-num">01 — ON DEMAND</div>
         <div class="how-step-title">Signal Query</div>
-        <div class="how-step-body">Send <code>/signal [company]</code> and the full intelligence pipeline runs immediately. The scout agent gathers data, the orchestrator routes to the right agents, and a structured brief is delivered in 30 to 90 seconds. Any company works.</div>
+        <div class="how-step-body">Send <code>/signal [company]</code> and the full intelligence pipeline runs immediately. The scout agent gathers data, the orchestrator routes to the right agents, and <strong>a structured brief is delivered in 30 to 90 seconds</strong>. Any company works.</div>
       </div>
       <div class="how-step">
         <div class="how-step-num">02 — PASSIVE</div>
         <div class="how-step-title">Watchlist Monitor</div>
-        <div class="how-step-body">Add companies with <code>/watch</code> and a lightweight background scout checks each one every 6 hours. When a company's signal score hits 6 or above, the full pipeline fires automatically and an alert is sent without any manual query needed.</div>
+        <div class="how-step-body">Add companies with <code>/watch</code> and a lightweight background scout checks each one <strong>every 6 hours</strong>. When a company's signal score hits 6 or above, <strong>the full pipeline fires automatically</strong> and an alert is sent without any manual query needed.</div>
       </div>
     </div>
 
@@ -768,7 +828,7 @@
       <div class="decision-card">
         <div class="decision-icon">🔀</div>
         <div class="decision-title">Conditional Routing for Known Patterns</div>
-        <div class="decision-body">For predictable signal categories like funding events, hiring spikes, leadership changes, and sentiment shifts, the orchestrator routes to pre-built specialized agents. These categories are stable enough that a well-configured agent handles them consistently across any company.</div>
+        <div class="decision-body">For predictable signal categories like <strong>funding events, hiring spikes, leadership changes, and sentiment shifts</strong>, the orchestrator routes to pre-built specialized agents. These categories are stable enough that a well-configured agent handles them consistently across any company.</div>
         <div class="decision-tradeoff">
           <strong>Tradeoff Considered</strong>
           Spawning for everything would be simpler to implement uniformly. Pre-built agents win on speed, cost, and consistency for known patterns. Spawning is reserved for where it actually adds value.
@@ -778,7 +838,7 @@
       <div class="decision-card">
         <div class="decision-icon">⚡</div>
         <div class="decision-title">Dynamic Agent Spawning for Edge Cases</div>
-        <div class="decision-body">When the scout returns a novelty score of 6 or above due to contradictory signals, cross-domain events, or structurally unusual situations, a supervisor agent reads the raw findings and writes a purpose-built agent at runtime. That agent does not exist until that moment. Inflection AI is the example: a simultaneous acqui-hire and continuing entity does not fit any pre-built routing pattern.</div>
+        <div class="decision-body">When the scout returns a novelty score of 6 or above due to <strong>contradictory signals, cross-domain events, or structurally unusual situations</strong>, a supervisor agent reads the raw findings and writes a purpose-built agent at runtime. That agent <strong>does not exist until that moment</strong>. Inflection AI is the example: a simultaneous acqui-hire and continuing entity does not fit any pre-built routing pattern.</div>
         <div class="decision-tradeoff">
           <strong>Tradeoff Considered</strong>
           Spawning is slower and more expensive than routing. It only triggers when the signal is novel enough that a generic agent would miss the nuance or produce conflicting outputs.
@@ -788,7 +848,7 @@
       <div class="decision-card">
         <div class="decision-icon">🏗️</div>
         <div class="decision-title">Scout-First Architecture</div>
-        <div class="decision-body">The scout runs before any routing decision is made. This means the system cannot know what it needs until it looks, which is the correct model for intelligence work. The scout's novelty score is load-bearing: it is what makes the routing decision non-trivial and what justifies the orchestrator existing at all.</div>
+        <div class="decision-body">The scout runs before any routing decision is made. This means <strong>the system cannot know what it needs until it looks</strong>, which is the correct model for intelligence work. The scout's novelty score is load-bearing: it is what makes the routing decision non-trivial and what justifies the orchestrator existing at all.</div>
         <div class="decision-tradeoff">
           <strong>Tradeoff Considered</strong>
           Running the scout first adds latency to every query. Routing based on the company name alone would miss the actual signal and reduce the orchestrator to a simple switch statement.
@@ -798,7 +858,7 @@
       <div class="decision-card">
         <div class="decision-icon">🧠</div>
         <div class="decision-title">Two Models, Two Jobs</div>
-        <div class="decision-body">Claude Haiku handles the orchestrator, watchlist lightweight scout, and routing decisions where speed and cost matter more than depth. Claude Sonnet handles the full scout, all analysis agents, dynamic spawning, and synthesis where output quality determines the value of the entire pipeline.</div>
+        <div class="decision-body"><strong>Claude Haiku</strong> handles the orchestrator, watchlist lightweight scout, and routing decisions where speed and cost matter more than depth. <strong>Claude Sonnet</strong> handles the full scout, all analysis agents, dynamic spawning, and synthesis where output quality determines the value of the entire pipeline.</div>
         <div class="decision-tradeoff">
           <strong>Tradeoff Considered</strong>
           Using Sonnet everywhere would produce marginally better routing decisions at 3x the cost. Haiku classification is accurate enough for binary routing logic and keeps the always-on watchlist monitor cheap to run.
@@ -808,7 +868,7 @@
       <div class="decision-card">
         <div class="decision-icon">📡</div>
         <div class="decision-title">Signal-Driven Watchlist Monitor</div>
-        <div class="decision-body">The watchlist runs a cheap Haiku-powered lightweight scout every 6 hours. It only returns a score with no analysis. If the score is below 6, nothing happens. If it hits 6 or above, the full Sonnet pipeline fires. This means expensive analysis only runs when something meaningful is actually detected.</div>
+        <div class="decision-body">The watchlist runs a cheap Haiku-powered lightweight scout <strong>every 6 hours</strong>. It only returns a score with no analysis. If the score is below 6, nothing happens. If it hits <strong>6 or above, the full Sonnet pipeline fires</strong>. This means expensive analysis only runs when something meaningful is actually detected.</div>
         <div class="decision-tradeoff">
           <strong>Tradeoff Considered</strong>
           A time-driven monitor (run full analysis every 6 hours regardless) would cost ~10x more and flood the user with low-signal output. Signal-driven monitoring is both more useful and more efficient.
@@ -818,7 +878,7 @@
       <div class="decision-card">
         <div class="decision-icon">💬</div>
         <div class="decision-title">Telegram as the Interface</div>
-        <div class="decision-body">An intelligence tool's value is in being alerted when something matters, not in going somewhere to check. Telegram is already on your phone, sends push notifications, and its command structure maps naturally onto interacting with an agent. Building a web frontend would have added days of work for no functional gain.</div>
+        <div class="decision-body">An intelligence tool's value is in <strong>being alerted when something matters</strong>, not in going somewhere to check. Telegram is already on your phone, sends push notifications, and its command structure maps naturally onto interacting with an agent. Building a web frontend would have added days of work for no functional gain.</div>
         <div class="decision-tradeoff">
           <strong>Tradeoff Considered</strong>
           A web dashboard would allow richer data visualization. For a personal intelligence tool where the primary value is timely alerting, Telegram delivers that at zero infrastructure cost.
