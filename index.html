@@ -332,8 +332,9 @@
     }
 
     .decision-icon {
-      font-size: 24px;
-      margin-bottom: 16px;
+      font-size: 20px;
+      margin-right: 10px;
+      flex-shrink: 0;
     }
 
     .decision-title {
@@ -342,6 +343,8 @@
       margin-bottom: 12px;
       letter-spacing: -0.01em;
       color: var(--text);
+      display: flex;
+      align-items: center;
     }
 
     .decision-body {
@@ -826,8 +829,7 @@
     <div class="decisions-grid">
 
       <div class="decision-card">
-        <div class="decision-icon">🔀</div>
-        <div class="decision-title">Conditional Routing for Known Patterns</div>
+        <div class="decision-title"><span class="decision-icon">🔀</span>Conditional Routing for Known Patterns</div>
         <div class="decision-body">For predictable signal categories like <strong>funding events, hiring spikes, leadership changes, and sentiment shifts</strong>, the orchestrator routes to pre-built specialized agents. These categories are stable enough that a well-configured agent handles them consistently across any company.</div>
         <div class="decision-tradeoff">
           <strong>Tradeoff Considered</strong>
@@ -836,8 +838,7 @@
       </div>
 
       <div class="decision-card">
-        <div class="decision-icon">⚡</div>
-        <div class="decision-title">Dynamic Agent Spawning for Edge Cases</div>
+        <div class="decision-title"><span class="decision-icon">⚡</span>Dynamic Agent Spawning for Edge Cases</div>
         <div class="decision-body">When the scout returns a novelty score of 6 or above due to <strong>contradictory signals, cross-domain events, or structurally unusual situations</strong>, a supervisor agent reads the raw findings and writes a purpose-built agent at runtime. That agent <strong>does not exist until that moment</strong>. Inflection AI is the example: a simultaneous acqui-hire and continuing entity does not fit any pre-built routing pattern.</div>
         <div class="decision-tradeoff">
           <strong>Tradeoff Considered</strong>
@@ -846,8 +847,7 @@
       </div>
 
       <div class="decision-card">
-        <div class="decision-icon">🏗️</div>
-        <div class="decision-title">Scout-First Architecture</div>
+        <div class="decision-title"><span class="decision-icon">🏗️</span>Scout-First Architecture</div>
         <div class="decision-body">The scout runs before any routing decision is made. This means <strong>the system cannot know what it needs until it looks</strong>, which is the correct model for intelligence work. The scout's novelty score is load-bearing: it is what makes the routing decision non-trivial and what justifies the orchestrator existing at all.</div>
         <div class="decision-tradeoff">
           <strong>Tradeoff Considered</strong>
@@ -856,8 +856,7 @@
       </div>
 
       <div class="decision-card">
-        <div class="decision-icon">🧠</div>
-        <div class="decision-title">Two Models, Two Jobs</div>
+        <div class="decision-title"><span class="decision-icon">🧠</span>Two Models, Two Jobs</div>
         <div class="decision-body"><strong>Claude Haiku</strong> handles the orchestrator, watchlist lightweight scout, and routing decisions where speed and cost matter more than depth. <strong>Claude Sonnet</strong> handles the full scout, all analysis agents, dynamic spawning, and synthesis where output quality determines the value of the entire pipeline.</div>
         <div class="decision-tradeoff">
           <strong>Tradeoff Considered</strong>
@@ -866,8 +865,7 @@
       </div>
 
       <div class="decision-card">
-        <div class="decision-icon">📡</div>
-        <div class="decision-title">Signal-Driven Watchlist Monitor</div>
+        <div class="decision-title"><span class="decision-icon">📡</span>Signal-Driven Watchlist Monitor</div>
         <div class="decision-body">The watchlist runs a cheap Haiku-powered lightweight scout <strong>every 6 hours</strong>. It only returns a score with no analysis. If the score is below 6, nothing happens. If it hits <strong>6 or above, the full Sonnet pipeline fires</strong>. This means expensive analysis only runs when something meaningful is actually detected.</div>
         <div class="decision-tradeoff">
           <strong>Tradeoff Considered</strong>
@@ -876,8 +874,7 @@
       </div>
 
       <div class="decision-card">
-        <div class="decision-icon">💬</div>
-        <div class="decision-title">Telegram as the Interface</div>
+        <div class="decision-title"><span class="decision-icon">💬</span>Telegram as the Interface</div>
         <div class="decision-body">An intelligence tool's value is in <strong>being alerted when something matters</strong>, not in going somewhere to check. Telegram is already on your phone, sends push notifications, and its command structure maps naturally onto interacting with an agent. Building a web frontend would have added days of work for no functional gain.</div>
         <div class="decision-tradeoff">
           <strong>Tradeoff Considered</strong>
